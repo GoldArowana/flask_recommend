@@ -1,3 +1,6 @@
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+开发进度：
+
 进行目录结构设计，https://github.com/GoldArowana/flask_mvc_demo
     设计成平时写Java项目的mvc的样子做的
     template文件夹下的jinja2模板不智能提示，整出来后写了个博客。
@@ -7,15 +10,16 @@
 数据库设计
     python模块不熟，调不出model
     表结构很纠结，想了一下午。
-    日期函数不熟，卡住了。
-    设置mysql后端的日期字段默认值，卡住了。
+    日期函数不熟，卡住了。https://docs.python.org/2/library/datetime.html
+    设置mysql后端的日期字段默认值，卡住了。http://docs.sqlalchemy.org/en/latest/core/defaults.html
     字符串+数字，总忘了str()来转换。
     随机数函数randint(x,y)是左闭右闭区间，整错了。
     python的None对应mysql端的null。
 
 插入测试数据，基本每个表都有了数据。方便开发的时候进行查看
 
-完善sqlalchemy的表和表之间的关系
+完善sqlalchemy的表和表之间的关系。
+    http://blog.csdn.net/Jmilk/article/details/52445093#one-to-many
 
 
 
