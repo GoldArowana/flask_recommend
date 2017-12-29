@@ -31,7 +31,7 @@
                 <ul class="nav pull-right">
                     <li>
                         {% if session.username != null %}
-                            <a href="#"><span class="badge badge-warning">您有 7 条未读消息</span></a>
+                            <a href="#"><span class="badge badge-warning">您有 0 条未读消息</span></a>
                         {% endif %}
 
                     </li>
@@ -40,7 +40,7 @@
 
                         <a data-toggle="dropdown" class="dropdown-toggle " href="#">
                             {% if session.username !=null %}
-                                session.username
+                                {{ session.username }}
                             {% else %}
                                 未登录
                             {% endif %}
@@ -89,7 +89,7 @@
                     <div class="account-details">
                         <span class="account-name">
                             {% if session.username != null %}
-                                session.username
+                                {{ session.username }}
                             {% else %}
                                 用户未登录
                             {% endif %}
@@ -106,11 +106,12 @@
                 <hr/>
                 <ul id="main-nav" class="nav nav-tabs nav-stacked">
                     <li>{# class="active"#}<a href="/"><i class="icon-home"></i>首页</a></li>
-                    <li><a href="/news/"><i class="icon-pushpin"></i>内推信息</a></li>
+                    <li><a href="/topic/1"><i class="icon-pushpin"></i>内推信息</a></li>
                     <li><a href="/vip/"><i class="icon-th-list"></i>积分/会员</a></li>
                     <li><a href="/grid/"><i class="icon-th-large"></i>网格布局<span
                             class="label label-warning pull-right">5</span></a></li>
                     <li><a href="/charts/"><i class="icon-signal"></i>数据图表</a></li>
+                    <li><a href="/settings/"><i class="icon-user"></i>个人设置</a></li>
                     <li><a href="/account/"><i class="icon-user"></i>个人主页</a></li>
                 </ul>
                 <hr/>
@@ -133,7 +134,7 @@
         <p>&copy; 2017 Go Ideate.理工内推网--专注哈理工学生IT内推</p>
     </div>
 </div>
-
+</body>
 <script src="/static/js/jquery-1.7.2.min.js"></script>
 <script src="/static/js/excanvas.min.js"></script>
 <script src="/static/js/jquery.flot.js"></script>
@@ -142,7 +143,5 @@
 <script src="/static/js/jquery.flot.resize.js"></script>
 <script src="/static/js/bootstrap.js"></script>
 <script src="/static/js/charts/bar.js"></script>
-
 {% block js %}{% endblock %}
-</body>
 </html>

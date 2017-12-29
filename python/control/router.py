@@ -10,41 +10,41 @@ from web import app
 from flask import render_template
 
 
-@app.route('/')
+@app.route('/', methods={'get', 'post'})
 def index():
     return render_template('index.html')
 
 
-@app.route('/index2/')
+@app.route('/index2/', methods={'get', 'post'})
 def index2():
     return render_template('base.html')
 
 
-@app.route('/news/')
-def news():
-    return render_template('news.html')
-
-
-@app.route('/grid/')
+@app.route('/grid/', methods={'get', 'post'})
 def grid():
     return render_template('grid.html')
 
 
-@app.route('/charts/')
+@app.route('/charts/', methods={'get', 'post'})
 def charts():
     return render_template('charts.html')
 
 
-@app.route('/account/')
+@app.route('/account/', methods={'get', 'post'})
 def account():
     return render_template('account.html')
 
 
-@app.route('/vip/')
+@app.route('/settings/', methods={'get', 'post'})
+def settings():
+    return render_template('settings.html')
+
+
+@app.route('/vip/', methods={'get', 'post'})
 def vip():
     return render_template('vip.html')
 
 
-@app.route('/login/')
+@app.route('/login/', methods={'get', 'post'})
 def login():
     return render_template('login.html')

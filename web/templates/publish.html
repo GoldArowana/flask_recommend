@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block contain_page %}
+    <form action="/topic/new/" method="post">
+        <h1 class="page-title"><i class="icon-th-large"></i>您正在发布一个内推信息</h1>
+        <div>
+            标题：<input type="text" title="标题" placeholder="XXX公司的XXX岗位实习内推" name="title"/>
+        </div>
+        <div>
+            公司：<input type="text" title="公司" placeholder="XXX公司" name="company"/>
+        </div>
+        <div>
+            标签：<input type="text" title="标签" placeholder="19届,20届,实习,阿里,Java" name="tag"/>(请用英文逗号分隔)
+        </div>
+        <div>
+            内容：<textarea type="text" title="内容" placeholder="详细信息" style="width: 100%;height: 300px;"
+                         name="context"></textarea>
+        </div>
+        <button type="submit" class="btn btn-warning btn-large">
+            提交
+        </button>
+    </form>
+{% endblock %}

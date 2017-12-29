@@ -56,7 +56,8 @@ def run_test():
         # 插入主题Topic
         for j in range(0, 4):
             db.session.add(Topic.Topic(i.id, user.id, on_datetime=datetime(2017, randint(1, 12), randint(1, 25)),
-                                       context=user.username + "发起：" + i.name + '公司开始' + str(j) + '次招聘招聘啦'))
+                                       context=user.username + "发起：" + i.name + '公司开始' + str(j) + '次招聘招聘啦',
+                                       title=i.name + '公司的xxx职位', tag='18届,19届,寒假实习'))
     # 插入评论
     topic_list = Topic.Topic.query.all()
     for i in topic_list:  # type:Topic.Topic
