@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}数据图表{% endblock %}
+{% block css %}{{ super() }}
+    <link href="/static/css/jquery.visualize.css" rel="stylesheet"/>
+{% endblock %}
+{% block contain_page %}
+    <h1 class="page-title">
+        <i class="icon-signal"></i>
+        Charts
+    </h1>
+    <div class="widget">
+        <div class="widget-header">
+            <h3>Area Chart</h3>
+        </div>
+        <div class="widget-content">
+            <div id="area-chart" class="chart-holder"></div>
+        </div>
+    </div>
+    <div class="widget">
+        <div class="widget-header">
+            <h3>Line Chart</h3>
+        </div>
+        <div class="widget-content">
+            <div id="line-chart" class="chart-holder"></div>
+        </div>
+    </div>
+    <div class="widget">
+        <div class="widget-header">
+            <h3>Bar Chart</h3>
+        </div>
+        <div class="widget-content">
+            <div id="bar-chart" class="chart-holder"></div>
+        </div>
+    </div>
+
+    <div class="widget">
+        <div class="widget-header">
+            <h3>Pie Chart</h3>
+        </div>
+        <div class="widget-content">
+            <div id="pie-chart" class="chart-holder"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script src="/static/js/jquery-1.7.2.min.js"></script>
+    <script src="/static/js/excanvas.min.js"></script>
+    <script src="/static/js/jquery.flot.js"></script>
+    <script src="/static/js/jquery.flot.pie.js"></script>
+    <script src="/static/js/jquery.flot.orderBars.js"></script>
+    <script src="/static/js/jquery.flot.resize.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/charts/bar.js"></script>
+    <script src="/static/js/charts/area.js"></script>
+    <script src="/static/js/charts/line.js"></script>
+    <script src="/static/js/charts/pie.js"></script>
+{% endblock %}
+
+
+
+
