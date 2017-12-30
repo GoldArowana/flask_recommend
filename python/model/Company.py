@@ -19,6 +19,8 @@ class Company(db.Model):
     logo_image = db.Column(db.Integer, db.ForeignKey('image.id'))
     detail = db.Column(db.TEXT)
 
+    topics = db.relationship("Topic", backref='company')
+
     def __init__(self, name, alias=''):
         self.name = name
         self.alias = alias

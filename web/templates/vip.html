@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block css %}
+    {{ super() }}
+    <link href="/static/css/pages/plans.css" rel="stylesheet"/>
+{% endblock %}
+{% block contain_page %}
+    <h1 class="page-title">
+        <i class="icon-th-list"></i>
+        会员/积分/充值
+    </h1>
+    <div class="widget">
+        <div class="widget-header">
+            <h3>请在以下方案中选择</h3>
+        </div>
+        <div class="widget-content">
+            <div class="pricing-plans plans-3">
+                <div class="plan-container">
+                    <div class="plan">
+                        <div class="plan-header">
+                            <div class="plan-title">
+                                购买积分
+                            </div>
+                            <div class="plan-price">
+                                <span class="note"></span>10元<span class="term">100积分</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><strong>免费</strong> 查看内推消息</li>
+                                <li><strong>免费</strong> 发布资料</li>
+                                <li><strong>免费</strong> 获得内推资格</li>
+                                <li><strong>购买</strong> 多种学习资料</li>
+                                <li><strong>获得</strong> 学长的有偿帮助</li>
+                            </ul>
+                        </div> <!-- /plan-features -->
+                        <div class="plan-actions">
+                            <a href="javascript:;" class="btn">购买</a>
+                        </div> <!-- /plan-actions -->
+                    </div> <!-- /plan -->
+                </div> <!-- /plan-container -->
+                <div class="plan-container">
+                    <div class="plan">
+                        <div class="plan-header">
+                            <div class="plan-title">
+                                积分多买优惠
+                            </div> <!-- /plan-title -->
+                            <div class="plan-price">
+                                <span class="note"></span>50元<span class="term">800积分</span>
+                            </div> <!-- /plan-price -->
+                        </div> <!-- /plan-header -->
+                        <div class="plan-features">
+                            <ul>
+                                <li><strong>拥有10元用户</strong> 全部特权</li>
+                                <li><strong>购买享受</strong> 额外的优惠</li>
+                                <li><strong>每月获得</strong> 1张‘答疑卷’</li>
+                                <li><strong>赠送一张</strong> 5元代金卷</li>
+                                <li><strong>用户名后面</strong> 有钻石标志</li>
+                            </ul>
+                        </div> <!-- /plan-features -->
+                        <div class="plan-actions">
+                            <a href="javascript:;" class="btn">购买</a>
+                        </div> <!-- /plan-actions -->
+                    </div> <!-- /plan -->
+                </div> <!-- /plan-container -->
+                <div class="plan-container">
+                    <div class="plan orange">
+                        <div class="plan-header">
+                            <div class="plan-title">
+                                直接充年费会员
+                            </div> <!-- /plan-title -->
+                            <div class="plan-price">
+                                <span class="note"></span>100元<span class="term">一年会员</span>
+                            </div> <!-- /plan-price -->
+                        </div> <!-- /plan-header -->
+                        <div class="plan-features">
+                            <ul>
+                                <li><strong>拥有50元用户</strong> 全部特权</li>
+                                <li><strong>所有费用</strong> 半价</li>
+                                <li><strong>赠送一套</strong> 技术课堂</li>
+                                <li><strong>赠送一张</strong> 站内免单卷</li>
+                                <li><strong>用户名后</strong> 有炫酷闪光</li>
+                            </ul>
+                        </div> <!-- /plan-features -->
+                        <div class="plan-actions">
+                            <a href="javascript:;" class="btn">购买</a>
+                        </div> <!-- /plan-actions -->
+                    </div> <!-- /plan -->
+                </div> <!-- /plan-container -->
+            </div> <!-- /pricing-plans -->
+        </div> <!-- /widget-content -->
+    </div> <!-- /widget -->
+    <div class="widget">
+        <div class="widget-header">
+            <h3>Account Information</h3>
+        </div> <!-- /widget-header -->
+        <div class="widget-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
+                id est laborum.</p>
+        </div> <!-- /widget-content -->
+    </div> <!-- /widget -->
+{% endblock %}

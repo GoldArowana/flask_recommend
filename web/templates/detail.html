@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ ret_dic.title }}
+{% endblock %}
+
+{% block contain_page %}
+    <h1 class="page-title"><i class="icon-th-large"></i>{{ ret_dic.title }}</h1>
+    <div class="row">
+        <div class="span9">
+            <div class="widget">
+                <div class="widget-content">
+                    <h3>{{ ret_dic.tag }}</h3>
+                    <p>公司：{{ ret_dic.company }}</p>
+                    <p>发布人：{{ ret_dic.author }}</p>
+                    <p>发布时间：{{ ret_dic.time }}</p>
+                    <p>详情：{{ ret_dic.context }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -22,6 +22,8 @@ class User(db.Model):
     graduate_year = db.Column(db.Date)
     name = db.Column(db.String(20), nullable=True)
 
+    topics = db.relationship("Topic", backref='user')
+
     def __init__(self, username, password, salt='', head_url='', sex='', graduate_year='20000000', name=''):
         self.username = username
         self.password = password
