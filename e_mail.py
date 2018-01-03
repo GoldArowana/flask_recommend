@@ -16,7 +16,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 msg_from = '1015486437@qq.com'  # 发送方邮箱
-password = 'tffaavpchpuznbfed'  # 填入发送方邮箱的授权码
+password = 'tffavpchpuznbfed'  # 填入发送方邮箱的授权码
 msg_tos = ['504471340@qq.com', '609429765@qq.com', '1015486437@qq.com']  # 收件人邮箱
 for i in range(len(msg_tos)):
     msg_to = msg_tos[i]

@@ -3,7 +3,7 @@
 
 进行目录结构设计，https://github.com/GoldArowana/flask_mvc_demo
     设计成平时写Java项目的mvc的样子做的
-    template文件夹下的jinja2模板不智能提示，整出来后写了个博客。http://www.cnblogs.com/noKing/p/8117461.html
+    template文件夹下的jinja2模板不智能提示，整出来后自己写了个博客。http://www.cnblogs.com/noKing/p/8117461.html
     static文件夹下的资源不自动提示，不识别。可以搞出来。但是弄出来后jinja模板又不能自动提示了。二者只能选其一。还没有别的解决办法
 
 
@@ -19,13 +19,24 @@
 插入测试数据，基本每个表都有了数据。方便开发的时候进行查看
 
 完善sqlalchemy的表和表之间的关系。
-    http://blog.csdn.net/Jmilk/article/details/52445093#one-to-many
+    参考博客：http://blog.csdn.net/Jmilk/article/details/52445093#one-to-many
 
 首页页面模板修改
 
-登陆登出功能
+登陆登出功能，简易版，简单session
 
 Topic页功能
 
 Topic发布功能--一半
 
+首页-用数量，ajax。加载错误后可以支持手动刷出来。
+
+首页最新10条news，ajax。
+
+vip页面样式
+
+settings页面样式
+
+加入404小游戏 https://github.com/litong9406/flappy_bird
+
+验证码

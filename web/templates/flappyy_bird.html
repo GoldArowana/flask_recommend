@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}404 页面找不到了{% endblock %}
+{% block contain_page %}
+    <h1 class="page-title">
+        <i class="icon-home"></i>
+        404 页面找不到了，但是你可以玩一局小游戏
+    </h1>
+    <div class="canvas">
+        <!-- 游戏开始 -->
+        <div class="game_start">
+            <div class="head">
+                <img src="/static/flappy_bird/images/head.jpg" alt="">
+                <span class="small_bird"></span>
+            </div>
+            <div class="btns">
+                <span class="start_btn"></span>
+                <span class="submit_btn"></span>
+            </div>
+        </div>
+        <!-- 移动条 -->
+        <div class="slider">
+            <img src="/static/flappy_bird/images/slider.jpg" alt="">
+            <img src="/static/flappy_bird/images/slider.jpg" alt="">
+        </div>
+        <!-- 鸟 🐦-->
+        <div id="flybird" class="bird">
+            <!--<img src="images/bird0.png" alt="">-->
+        </div>
+        <!-- 管道 -->
+        <div class="conduit_group">
+
+        </div>
+        <!-- 游戏结束 -->
+
+        <div class="gameover">
+            <div class="overImg">
+                <img src="/static/flappy_bird/images/game_over.jpg" alt="">
+            </div>
+            <div class="overMessage">
+                <span class="thisScore"></span>
+                <span class="historyScore"></span>
+            </div>
+            <div class="game_restart">
+                <img src="/static/flappy_bird/images/ok.jpg" alt="">
+            </div>
+
+        </div>
+
+        <!-- 积分 -->
+        <div id="scroing" class="scroing">
+            <!--<img src="images/0.jpg" alt="">-->
+        </div>
+    </div>
+    <audio class='bgm' src="/static/flappy_bird/source/game_music.mp3" autoplay="autoplay" loop="loop"></audio>
+    <audio class='gameover_bgm' src="/static/flappy_bird/source/game_over.mp3" autoplay="autoplay"></audio>
+    <audio class='up_bgm' src="/static/flappy_bird/source/bullet.mp3" autoplay="autoplay"></audio>
+
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="/static/flappy_bird/css/game.css" media="screen" title="no title">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="/static/flappy_bird/js/index.js"></script>
+
+{% endblock %}
