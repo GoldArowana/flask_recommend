@@ -7,7 +7,8 @@
 @describe:
 """
 
-__all__ = ['Advertising', 'Comment', 'Company', 'Image', 'Manager', 'Resume', 'Topic', 'User', 'Message', 'SysMessage']
+__all__ = ['Advertising', 'Comment', 'Company', 'Image', 'Manager', 'Resume', 'Topic', 'User', 'Message', 'SysMessage',
+           'Email']
 
 from . import *
 

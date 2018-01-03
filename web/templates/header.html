@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zn-ch">
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link href="/static/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/static/css/adminia.css" rel="stylesheet"/>
+    <link href="/static/css/adminia-responsive.css" rel="stylesheet"/>
+    <link href="/static/css/pages/dashboard.css" rel="stylesheet"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+
+            <a class="brand" href="/">理工内推网</a>
+            {#            <div class="brand" style="margin-left: 10px;color: deepskyblue;" href="/">此网站由易圣通公司独家赞助</div>#}
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                    <li>
+                        {% if session.username != null %}
+                            <a href="#"><span class="badge badge-warning">您有 0 条未读消息</span></a>
+                        {% endif %}
+
+                    </li>
+                    <li class="divider-vertical"></li>
+                    <li class="dropdown">
+
+                        <a data-toggle="dropdown" class="dropdown-toggle " href="/#">
+                            {% if session.username !=null %}
+                                {{ session.username }}
+                            {% else %}
+                                未登录
+                            {% endif %}
+                            <b class="caret"></b>
+                        </a>
+
+                        {% if session.username !=null %}
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/account/"><i class="icon-user"></i> 设置 </a>
+                                </li>
+                                <li>
+                                    <a href="/change_password/"><i class="icon-lock"></i> 修改密码</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="/logout/"><i class="icon-off"></i>登出</a>
+                                </li>
+                            </ul>
+                            </li>
+                        {% else %}
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/login/"><i class="icon-user"></i> 登陆 </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="/register/"><i class="icon-user"></i>注册</a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                </ul>
+            </div> <!-- /nav-collapse -->
+        </div> <!-- /container -->
+    </div> <!-- /navbar-inner -->
+</div> <!-- /navbar -->
+
+{% block base %}{% endblock %}
+<div id="footer">
+    <div class="container">
+        <hr/>
+        <p>&copy; 2017 Go Ideate.理工内推网--专注哈理工学生IT内推</p>
+    </div>
+</div>
+</body>
+<script src="/static/js/jquery-1.7.2.min.js"></script>
+<script src="/static/js/excanvas.min.js"></script>
+<script src="/static/js/jquery.flot.js"></script>
+<script src="/static/js/jquery.flot.pie.js"></script>
+<script src="/static/js/jquery.flot.orderBars.js"></script>
+<script src="/static/js/jquery.flot.resize.js"></script>
+<script src="/static/js/bootstrap.js"></script>
+<script src="/static/js/charts/bar.js"></script>
+{% block js %}{% endblock %}
+</html>

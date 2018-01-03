@@ -1,0 +1,185 @@
+{% extends "header.html" %}
+{% block title %}注册页面{% endblock %}
+{% block css %}
+    <link href="/static/css/pages/login.css" rel="stylesheet"/>
+    <style>
+        #get_sign:hover {
+            color: orangered;
+        }
+    </style>
+{% endblock %}
+{% block base %}
+    <div id="login-container">
+        <div id="login-header">
+
+            {% if get_flashed_messages() | length <=0 %}
+                <h3>请注册</h3>
+            {% else %}
+                {% for message in get_flashed_messages() %}
+                    <h3 style="color: red;">{{ message }}</h3>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+        <div id="login-content" class="clearfix">
+            <form action="/add_user/" method="post">
+                <fieldset>
+                    <div class="control-group">
+                        <label id="username_label" class="control-label" for="username">*帐号</label>
+                        <div class="controls">
+                            <input type="text" class="" id="username" name="username"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label id="password_label" class="control-label" for="password">*密码</label>
+                        <div class="controls">
+                            <input type="password" class="" id="password" name="password"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label id="sex_label" class="control-label" for="sex">*性别</label>
+                        <div class="controls" onclick="select_sex()">
+                            <label style="display: inline;padding-left: 10%">
+                                男<input style="width: 10%;display: inline;" name="sex" type="radio" value="m" alt="男"/>
+                            </label>
+                            <label style="display: inline;padding-left: 10%">
+                                女<input style="width: 10%;display: inline;" name="sex" type="radio" value="f" alt="女"/>
+                            </label>
+                            <label style="display: inline;padding-left: 10%">
+                                其他<input style="width: 10%;display: inline;" name="sex" type="radio" value="o"
+                                         alt="其他"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="graduate_year">*毕业年份</label>
+                        <div class="controls">
+                            <label>
+                                <select id="graduate_year" name="graduate_year">
+                                    <option value="">请选择年份</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="netname">昵称</label>
+                        <div class="controls">
+                            <input type="text" class="" id="netname" name="netname"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="email_address">*电子邮箱</label>
+                        <div class="controls">
+                            <input type="text" class="" id="email_address" name="email_address"/>
+                            <span id="get_sign"
+                                  style="border-bottom:1px solid dodgerblue;cursor: pointer;">点击获取邮箱验证码</span>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-warning btn-large">
+                        注册
+                    </button>
+                </div>
+            </form>
+        </div> <!-- /login-content -->
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        function get_year() {
+            var year = new Date().getFullYear(); //获取当前年份
+            var sel = document.getElementById('graduate_year');//获取select下拉列表
+            for (var i = year + 4; i > 2000; i--)//循环添加2006到当前年份加3年的每个年份依次添加到下拉列表
+            {
+                var option = document.createElement('option');
+                option.value = i;
+                var txt = document.createTextNode(i);
+                option.appendChild(txt);
+                sel.appendChild(option);
+            }
+        }
+
+        get_year();
+
+        $('#get_sign').click(function () {
+            console.log('afd')
+        });
+
+        var username = '';
+        $('#username').blur(function () {
+            if (this.value === username) {
+                return;
+            }
+            username = this.value;
+            $.ajax({
+                url: '/username_check/',
+                type: 'post',
+                async: true,
+                timeout: 5000,
+                data: {
+                    username: this.value
+                },
+                success: function (data) {
+                    if (data.has_username === false) {
+                        $('#username_label').text('用户名可以使用').css({'color': 'deepskyblue'});
+                        $('#username').css({'color': 'deepskyblue'});
+                    } else {
+                        $('#username_label').text('用户名重复').css({'color': 'red'});
+                        $('#username').css({'color': 'red'});
+                    }
+                },
+                error: function (xhr, textStatus) {
+                    console.log('加载失败')
+                }
+            })
+        });
+
+        var password = '';
+        $('#password').blur(function () {
+            if (this.value === password) {
+                return;
+            }
+            password = this.value;
+            if (password.length < 6) {
+                $('#password').css({'color': 'red'});
+                $('#password_label').text('密码太短，不安全').css({'color': 'red'});
+            } else {
+                $('#password').css({'color': 'deepskyblue'});
+                $('#password_label').text('密码长度ok').css({'color': 'deepskyblue'});
+            }
+        });
+
+        function select_sex() {
+            var radios = document.getElementsByName("sex");
+            var val;
+            for (index in radios) {
+                if (radios[index].checked) {
+                    alt = radios[index].alt;
+                    $('#sex_label').text('您选择的性别是: ' + alt).css({'color': 'deepskyblue'});
+                    break;
+                }
+            }
+        }
+
+        var graduate_year = '';
+        $('#graduate_year').blur(function () {
+            if (this.value === '') {
+                console.log('no');
+                return;
+            }
+
+            if (graduate_year === this.value) {
+                return;
+            }
+            graduate_year = this.value;
+
+            console.log(this.value)
+        })
+    </script>
+
+{% endblock %}

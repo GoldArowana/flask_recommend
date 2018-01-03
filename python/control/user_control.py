@@ -36,3 +36,26 @@ def logout():
 def get_user_count():
     user_count = db.session.query(func.count('*')).select_from(User).scalar()
     return jsonify(user_count)
+
+
+@app.route('/add_user/', methods={'get', 'post'})
+def add_user():
+    username = request.values.get('username')
+    password = request.values.get('password')
+    sex = request.values.get('sex')
+    graduate_year = request.values.get('graduate_year')
+    netname = request.values.get('netname')
+    email_address = request.values.get('email_address')
+    flash('您已注册成功, 请登录')
+    return redirect('/login/')
+
+
+@app.route('/username_check/', methods={'post'})
+def username_check():
+    username = request.values.get('username')
+    print(username)
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        return jsonify({'has_username': False})
+    else:
+        return jsonify({'has_username': True})

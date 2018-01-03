@@ -15,11 +15,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/index2/', methods={'get', 'post'})
-def index2():
-    return render_template('base.html')
-
-
 @app.route('/charts/', methods={'get', 'post'})
 def charts():
     return render_template('charts.html')
@@ -44,6 +39,10 @@ def vip():
 def login():
     return render_template('login.html')
 
+
+@app.route('/register/', methods={'get', 'post'})
+def register():
+    return render_template('register.html')
 
 @app.errorhandler(404)
 def error_404(error):

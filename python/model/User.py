@@ -10,6 +10,7 @@ from web import db
 from random import randint
 from datetime import date
 
+
 class User(db.Model):
     __tablename__ = 'user'
     __table_args__ = {'mysql_collate': 'utf8_general_ci'}
@@ -21,8 +22,8 @@ class User(db.Model):
     sex = db.Column(db.Enum('', 'male', 'female'))
     graduate_year = db.Column(db.Date)
     name = db.Column(db.String(20), nullable=True)
-
     topics = db.relationship("Topic", backref='user')
+    email = db.relationship("Email", backref='user', uselist=False)
 
     def __init__(self, username, password, salt='', head_url='', sex='', graduate_year=date.today(), name=''):
         self.username = username
