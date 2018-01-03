@@ -22,7 +22,7 @@
 
         </div>
         <div id="login-content" class="clearfix">
-            <form action="/add_user/" method="post">
+            <form action="/add_user/" method="post" onkeydown="if(event.keyCode===13){return false;}">
                 <fieldset>
                     <div class="control-group">
                         <label id="username_label" class="control-label" for="username">*帐号</label>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="graduate_year">*毕业年份</label>
+                        <label id="graduate_year_label" class="control-label" for="graduate_year">*毕业年份</label>
                         <div class="controls">
                             <label>
                                 <select id="graduate_year" name="graduate_year">
@@ -63,18 +63,24 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="netname">昵称</label>
+                        <label class="control-label" for="netname">昵称(选填)</label>
                         <div class="controls">
                             <input type="text" class="" id="netname" name="netname"/>
                         </div>
                     </div>
-
                     <div class="control-group">
-                        <label class="control-label" for="email_address">*电子邮箱</label>
+                        <label id="email_address_label" class="control-label" for="email_address">*电子邮箱</label>
                         <div class="controls">
                             <input type="text" class="" id="email_address" name="email_address"/>
-                            <span id="get_sign"
-                                  style="border-bottom:1px solid dodgerblue;cursor: pointer;">点击获取邮箱验证码</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label id="sign_email_label" class="control-label" for="sign_email">*邮箱验证码</label>
+                        <div class="controls">
+                            <input type="text" disabled="disabled" class="" id="sign_email" name="sign_email"/>
+                            <button id="get_sign" type="button"
+                                    style="border-bottom:1px solid dodgerblue;cursor: pointer;" onclick="">点击获取邮箱验证码
+                            </button>
                         </div>
                     </div>
                 </fieldset>
@@ -107,8 +113,43 @@
         get_year();
 
         $('#get_sign').click(function () {
-            console.log('afd')
-        });
+            console.log($('#email_address_label').css('color'));
+            $.ajax({
+                url: '/get_sign/',
+                type: 'post',
+                timeout: 5000,
+                async: true,
+                data: {
+                    email_address: $('#email_address').val()
+                },
+                success: function (data) {
+                    counter = data.time;
+
+                    function count_down() {
+                        var get_sign_button = $('#get_sign');
+                        if (counter === 0) {
+                            get_sign_button.removeAttr("disabled");
+                            get_sign_button.css({'cursor': 'pointer'});
+                            get_sign_button.text("免费获取验证码");
+                        } else {
+                            get_sign_button.attr("disabled", "disabled");
+                            get_sign_button.css({'cursor': 'not-allowed'});
+                            get_sign_button.text("重新发送(" + counter + ")");
+                            counter--;
+                            setTimeout(function () {
+                                count_down()
+                            }, 1000)
+                        }
+                    }
+
+                    count_down(counter);
+                },
+                error: function () {
+                    $('#get_sign').text("发送失败，请重新获取验证码");
+                }
+            })
+        })
+        ;
 
         var username = '';
         $('#username').blur(function () {
@@ -156,10 +197,9 @@
 
         function select_sex() {
             var radios = document.getElementsByName("sex");
-            var val;
             for (index in radios) {
                 if (radios[index].checked) {
-                    alt = radios[index].alt;
+                    var alt = radios[index].alt;
                     $('#sex_label').text('您选择的性别是: ' + alt).css({'color': 'deepskyblue'});
                     break;
                 }
@@ -169,7 +209,8 @@
         var graduate_year = '';
         $('#graduate_year').blur(function () {
             if (this.value === '') {
-                console.log('no');
+                $('#graduate_year').css({'color': 'red'});
+                $('#graduate_year_label').css({'color': 'red'});
                 return;
             }
 
@@ -178,8 +219,58 @@
             }
             graduate_year = this.value;
 
-            console.log(this.value)
-        })
+            $('#graduate_year').css({'color': 'deepskyblue'});
+            $('#graduate_year_label').css({'color': 'deepskyblue'});
+        });
+
+        var email_address_input = '';
+        var reg_email = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+        var email_address = $('#email_address');
+        var is_email_ok = false;
+        var sign_email = $('#sign_email');
+        email_address.blur(function () {
+            if (email_address.val() === email_address_input) {
+                return;
+            }
+            email_address_input = email_address.val();
+            if (reg_email.test(email_address.val())) {
+                $('#email_address_label').css('color', 'deepskyblue');
+                email_address.css('color', 'deepskyblue');
+                is_email_ok = true;
+            } else {
+                $('#email_address_label').css('color', 'red');
+                email_address.css('color', 'red');
+                is_email_ok = false;
+            }
+            if (is_email_ok === false) {
+                sign_email.attr('disabled', 'disabled');
+            } else {
+                sign_email.removeAttr('disabled');
+            }
+        });
+
+        var sign_email_input = '';
+        var reg_sign = new RegExp("^[0-9]{6}$");
+        sign_email.blur(function () {
+            if (sign_email_input === sign_email.val()) {
+                return;
+            }
+            sign_email_input = sign_email.val();
+            if (reg_sign.test(sign_email_input)) {
+                sign_email.css("color", "deepskyblue");
+                $('#sign_email_label').css("color", "deepskyblue");
+            } else {
+                sign_email.css("color", "red");
+                $('#sign_email_label').css("color", "red");
+            }
+        });
+
+        document.onkeydown = function (event) {
+            var e = event || window.event;
+            if (e && e.keyCode === 13) { //回车键的键值为13
+                $("#login").click(); //调用登录按钮的登录事件
+            }
+        };
     </script>
 
 {% endblock %}

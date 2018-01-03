@@ -44,6 +44,7 @@ def login():
 def register():
     return render_template('register.html')
 
+
 @app.errorhandler(404)
 def error_404(error):
     return render_template("flappyy_bird.html"), 404

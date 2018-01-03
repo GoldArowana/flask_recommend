@@ -9,6 +9,6 @@
 
 print('control')
 
-__all__ = ['router', 'user_control', 'topic_control']
+__all__ = ['router', 'user_control', 'topic_control', 'email_control']
 
 from . import *
