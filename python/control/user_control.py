@@ -22,6 +22,7 @@ def login_check():
         return redirect('/login/')
     else:
         session['username'] = username
+        # print(session['username'])
         return redirect('/')
 
 

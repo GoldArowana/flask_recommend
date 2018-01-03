@@ -6,7 +6,7 @@
 @time: 2017/12/29 11:24
 @describe:
 """
-from flask import render_template, jsonify, redirect, request
+from flask import render_template, jsonify, redirect, request, session
 from flask_sqlalchemy import BaseQuery
 
 from web import app, db
@@ -28,6 +28,7 @@ def topic(page):
     ret_dic['cur_page'] = page
     ret_dic['has_prev'] = paginate.has_prev
     ret_dic['has_next'] = paginate.has_next
+    # print(session['username'])
     return render_template('topic.html', ret_dic=ret_dic)
 
 
@@ -57,3 +58,14 @@ def topic_new():
     context = request.values.get('context')
 
     return redirect('/')
+
+
+@app.route('/get_last_10_news/', methods={'get', 'post'})
+def get_last_10_news():
+    last_10_news_list = Topic.query.order_by(Topic.on_datetime).limit(10).all()
+    ret_list = []
+    for i in last_10_news_list:  # type:Topic
+        ret_list.append(
+            {'id': i.id, 'title': i.title, 'company': i.company.name, 'time': i.on_datetime, 'user': i.user.username})
+    print(ret_list)
+    return jsonify(ret_list)

@@ -53,10 +53,11 @@
 
         <div class="widget-header">
             <i class="icon-th-list"></i>
-            <h3>最新动态</h3>
+            <h3>最新动态</h3><span id="refresh_last_10"
+                               style="border: 1px solid skyblue;background-color: lightskyblue;cursor: pointer;">刷新</span>
         </div>
 
-        <div class="widget-content">
+        <div class="widget-content" style="display:block;">
             <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
@@ -69,22 +70,22 @@
                 </tr>
                 </thead>
 
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>腾讯</td>
-                    <td>Android工程师</td>
-                    <td>2017-01-15</td>
-                    <td>Chicago Bulls</td>
-                    <td class="action-td">
-                        <a href="javascript:;" class="btn btn-small btn-warning">
-                            <i class="icon-heart"></i>
-                        </a>
-                        <a href="javascript:;" class="btn btn-small">
-                            <i class="icon-remove"></i>
-                        </a>
-                    </td>
-                </tr>
+                <tbody id="last_10_news_id">
+                {#                <tr>#}
+                {#                    <td>1</td>#}
+                {#                    <td>腾讯</td>#}
+                {#                    <td>Android工程师</td>#}
+                {#                    <td>2017-01-15</td>#}
+                {#                    <td>Chicago Bulls</td>#}
+                {#                    <td class="action-td">#}
+                {#                        <a href="javascript:;" class="btn btn-small btn-warning">#}
+                {#                            <i class="icon-heart"></i>#}
+                {#                        </a>#}
+                {#                        <a href="javascript:;" class="btn btn-small">#}
+                {#                            <i class="icon-remove"></i>#}
+                {#                        </a>#}
+                {#                    </td>#}
+                {#                </tr>#}
                 </tbody>
             </table>
         </div>
@@ -115,6 +116,7 @@
 {% endblock %}
 {% block js %}
     {{ super() }}
+    {#加载用户数量#}
     <script type="text/javascript">
         (function get_user_count() {
             user_count = $('#user_count');
@@ -136,6 +138,8 @@
                 }
             });
         })();
+
+        {#加载话题数量#}
         (function get_topic_count() {
             topic_count = $('#topic_count');
             $.ajax({
@@ -155,6 +159,45 @@
                     })
                 }
             })
-        })()
+        })();
+
+        {#加载最新10条消息#}
+        (get_last_10_news = function () {
+            var th_element = $('#last_10_news_id').children('th');
+            $('#last_10_news_id').empty();
+            $('#last_10_news_id').append(th_element);
+            $.ajax({
+                url: '/get_last_10_news/',
+                type: 'POST',
+                async: true,
+                timeout: 5000,
+                success: function (data) {
+                    console.log('加载');
+                    for (var i = 0; i < data.length; i++) {
+                        var tb_element = table_element(i, data);
+                        $('#last_10_news_id').append(tb_element);
+                    }
+                },
+                error: function (i, data) {
+                    console.log('10_news加载错误')
+                }
+            })
+        })();
+
+        function table_element(i, data) {
+            var ret = "<tr>";
+            ret += "<td>" + (i + 1) + "</td>";
+            ret += "<td>" + data[i].company + "</td>";
+            ret += "<td>" + data[i].title + "</td>";
+            ret += "<td>" + data[i].time + "</td>";
+            ret += "<td>" + data[i].user + "</td>";
+            ret += "</tr>";
+            return ret;
+        }
+
+        $('#refresh_last_10').click(function () {
+            get_last_10_news();
+        })
+
     </script>
 {% endblock %}

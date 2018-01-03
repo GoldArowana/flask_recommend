@@ -8,7 +8,7 @@
 """
 from web import db
 from random import randint
-
+from datetime import date
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -24,7 +24,7 @@ class User(db.Model):
 
     topics = db.relationship("Topic", backref='user')
 
-    def __init__(self, username, password, salt='', head_url='', sex='', graduate_year='20000000', name=''):
+    def __init__(self, username, password, salt='', head_url='', sex='', graduate_year=date.today(), name=''):
         self.username = username
         self.password = password
         self.salt = salt
