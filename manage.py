@@ -34,6 +34,7 @@ def run_test():
     db.session.add(User.User('sun', '123'))
     db.session.add(User.User('liu', '123'))
     db.session.add(User.User('zhu', '123'))
+
     # 插入公司Company
     db.session.add(Company.Company('百度', '熊场'))
     db.session.add(Company.Company('腾讯', '鹅场'))
@@ -65,7 +66,8 @@ def run_test():
             db.session.add(Comment.Comment(i.id, j.id, context='我是' + j.username + ',我想投简历'))
 
     db.session.commit()
-
+    db.session.add(Email.Email('1', '123@123.com'))
+    db.session.commit()
 
 if __name__ == '__main__':
     manager.run()

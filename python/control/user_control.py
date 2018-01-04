@@ -7,16 +7,17 @@
 @describe:
 """
 from web import app, db
-from flask import render_template, request, redirect, flash, session, jsonify
-from python.model.User import User  # type:User
+from flask import request, redirect, flash, session, jsonify
+from python.model import *
 from sqlalchemy.sql import func
+from python.control import sign_control
 
 
 @app.route('/login_check/', methods={'get', 'post'})
 def login_check():
     username = request.values.get('username')
     password = request.values.get('password')
-    user = User.query.filter_by(username=username, password=password).first()
+    user = User.User.query.filter_by(username=username, password=password).first()
     if user is None:
         flash('登陆失败')
         return redirect('/login/')
@@ -46,6 +47,23 @@ def add_user():
     graduate_year = request.values.get('graduate_year')
     netname = request.values.get('netname')
     email_address = request.values.get('email_address')
+    sign_num = request.values.get('sign_email')
+    print(sign_num)
+    print(graduate_year)
+    if not sign_control.SignHolder.sign(sign_num):
+        flash('验证码错误')
+        return redirect('/register/')
+    print(sign_num)
+    print(sign_control.SignHolder.sign_list)
+    db.session.add(User.User(username, password, sex=sex, graduate_year=int(graduate_year), name=netname))
+    print('user inserted')
+    # db.session.commit()
+    print('user commit')
+    this_user = User.User.query.filter_by(username=username).first()  # type:User
+    print(this_user)
+    db.session.add(Email.Email(this_user.id, email_address))
+    print('email inserted')
+    db.session.commit()
     flash('您已注册成功, 请登录')
     return redirect('/login/')
 
@@ -54,7 +72,7 @@ def add_user():
 def username_check():
     username = request.values.get('username')
     print(username)
-    user = User.query.filter_by(username=username).first()
+    user = User.User.query.filter_by(username=username).first()
     if user is None:
         return jsonify({'has_username': False})
     else:

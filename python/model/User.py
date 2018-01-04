@@ -19,13 +19,14 @@ class User(db.Model):
     password = db.Column(db.String(30), nullable=False)
     salt = db.Column(db.String(32))
     head_url = db.Column(db.String(256))
-    sex = db.Column(db.Enum('', 'male', 'female'))
-    graduate_year = db.Column(db.Date)
+    sex = db.Column(db.Enum('o', 'm', 'f'))
+    graduate_year = db.Column(db.SmallInteger)
     name = db.Column(db.String(20), nullable=True)
     topics = db.relationship("Topic", backref='user')
     email = db.relationship("Email", backref='user', uselist=False)
 
-    def __init__(self, username, password, salt='', head_url='', sex='', graduate_year=date.today(), name=''):
+    def __init__(self, username, password, salt='', head_url='', sex='o', graduate_year=int(date.today().year),
+                 name=''):
         self.username = username
         self.password = password
         self.salt = salt
