@@ -10,5 +10,7 @@
 from flask import render_template, jsonify, redirect, request, session
 from flask_sqlalchemy import BaseQuery
 
-from web import app, db
+from web import app, db, login_require, log
 from python.model.Vip import Vip  # type:Vip
+
+# @login_require

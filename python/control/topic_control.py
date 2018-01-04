@@ -9,7 +9,7 @@
 from flask import render_template, jsonify, redirect, request, session
 from flask_sqlalchemy import BaseQuery
 
-from web import app, db, log
+from web import app, db, log, login_require
 from python.model.Topic import Topic  # type:Topic
 from python.model.User import User  # type:User
 from sqlalchemy.sql import func
@@ -33,11 +33,13 @@ def topic(page):
 
 
 @app.route('/topic/publish/', methods={'get', 'post'})
+@login_require
 def topic_publish():
     return render_template('publish.html', methods={'get', 'post'})
 
 
 @app.route('/topic/detail/<int:topic_id>/', methods={'get', 'post'})
+@login_require
 def detail(topic_id):
     topic = Topic.query.filter_by(id=topic_id).first()
     ret_dic = {'company': topic.company.name, 'author': topic.user.username, 'time': topic.on_datetime,
@@ -52,6 +54,7 @@ def get_topic_count():
 
 
 @app.route('/topic/new/', methods={'get', 'post'})
+@login_require
 def topic_new():
     log("info", "start pulish new topic**********************************************************************")
     title = request.values.get('title')

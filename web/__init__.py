@@ -6,10 +6,11 @@
 @time: 2017/12/26 18:43
 @describe:
 """
-from flask import Flask
+from flask import Flask, session, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 import logging
 import time
+import functools
 
 app = Flask(__name__)  # type:Flask
 
@@ -27,6 +28,17 @@ def log(level, msg):
     if log_level.get(level) is not None:
         app.logger.log(log_level[level], "[" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + "] " + msg)
     return 'logged:' + msg
+
+
+def login_require(func):
+    @functools.wraps(func)
+    def wrapper():
+        if session.get('username') is not None:
+            func()
+        else:
+            return redirect('/login/')
+
+    return wrapper
 
 
 db = SQLAlchemy(app)

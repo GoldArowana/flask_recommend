@@ -6,7 +6,7 @@
 @time: 2017/12/26 18:47
 @describe:
 """
-from web import app, db, log
+from web import app, db, log, login_require
 from flask import request, redirect, flash, session, jsonify
 from python.model import *
 from sqlalchemy.sql import func
@@ -30,6 +30,7 @@ def login_check():
 
 
 @app.route('/logout/', methods={'get', 'post'})
+@login_require
 def logout():
     username = session.pop('username')
     log("info", username + " <login out>")

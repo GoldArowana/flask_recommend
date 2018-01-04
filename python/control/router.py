@@ -6,7 +6,7 @@
 @time: 2017/12/28 13:01
 @describe:
 """
-from web import app, log
+from web import app, log, login_require
 from flask import render_template, jsonify, request
 
 
@@ -16,21 +16,25 @@ def index():
 
 
 @app.route('/charts/', methods={'get', 'post'})
+@login_require
 def charts():
     return render_template('charts.html')
 
 
 @app.route('/account/', methods={'get', 'post'})
+@login_require
 def account():
     return render_template('account.html')
 
 
 @app.route('/settings/', methods={'get', 'post'})
+@login_require
 def settings():
     return render_template('settings.html')
 
 
 @app.route('/vip/', methods={'get', 'post'})
+@login_require
 def vip():
     return render_template('vip.html')
 
@@ -49,11 +53,3 @@ def register():
 def error_404(error):
     log("error", "<404> path:" + str(request.path))
     return render_template("flappy_bird.html"), 404
-
-
-@app.errorhandler(Exception)
-def error_500(error):
-    """这个handler可以catch住所有的abort(500)和raise exeception."""
-    log("error", "<404> path:" + str(request.path))
-    response = dict(status=0, message="500 Error")
-    return jsonify(response), 400
