@@ -65,3 +65,9 @@ bug:::不需要登陆的页面可以正常跳转。需要登陆的页面在登�
 解决： stack上的答案：you only returns a template under some circumstances。
 
 增加md5加密。密码加盐处理。
+
+发送邮件功能异常，修复。
+
+部署到linux上后sqlalchemy的不兼容问题。
+
+部署到linux上后，日志路径盘符问题。
