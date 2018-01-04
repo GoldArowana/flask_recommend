@@ -45,6 +45,7 @@ def run_test():
     user_list = User.User.query.all()
     for i in user_list:  # type:User.User
         db.session.add(Resume.Resume(i.id, detail=i.username + '的简历'))
+        db.session.add(Vip.Vip(i.id))
     # 插入广告和主题
     man = Man.Manager.query.get(1)  # type:Man.Manager
     user = User.User.query.get(1)

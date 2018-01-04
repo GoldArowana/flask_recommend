@@ -6,8 +6,10 @@
         <div>
             标题：<input type="text" title="标题" placeholder="XXX公司的XXX岗位实习内推" name="title"/>
         </div>
-        <div>
-            公司：<input type="text" title="公司" placeholder="XXX公司" name="company"/>
+        <div>公司：
+            <select id="company" name="company">
+                <option value="">请选择公司</option>
+            </select>
         </div>
         <div>
             标签：<input type="text" title="标签" placeholder="19届,20届,实习,阿里,Java" name="tag"/>(请用英文逗号分隔)
@@ -20,4 +22,39 @@
             提交
         </button>
     </form>
+{% endblock %}
+{% block js %}
+    <script>
+
+        document.onkeydown = function (event) {
+            var e = event || window.event;
+            if (e && e.keyCode === 13) { //回车键的键值为13
+                $("#login").click(); //调用登录按钮的登录事件
+            }
+        };
+
+        function get_year() {
+            $.ajax({
+                url: '/get_company_inf/',
+                type: 'post',
+                timeout: 5000,
+                async: true,
+                success: function (data) {
+                    var sel = document.getElementById('company');//获取select下拉列表
+                    for (i in data) {//循环添加2006到当前年份加3年的每个年份依次添加到下拉列表
+                        var option = document.createElement('option');
+                        option.value = data[i].id;
+                        var txt = document.createTextNode(data[i].name);
+                        option.appendChild(txt);
+                        sel.appendChild(option);
+                    }
+                },
+                error: function () {
+                    console.log('error.....')
+                }
+            })
+        }
+
+        get_year();
+    </script>
 {% endblock %}

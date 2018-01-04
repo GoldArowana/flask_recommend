@@ -8,7 +8,7 @@
 """
 
 __all__ = ['Advertising', 'Comment', 'Company', 'Image', 'Manager', 'Resume', 'Topic', 'User', 'Message', 'SysMessage',
-           'Email']
+           'Email', 'Vip']
 
 from . import *
 

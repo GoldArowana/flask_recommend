@@ -6,7 +6,7 @@
 @time: 2018/1/3 23:20
 @describe:
 """
-from web import app
+from web import app, log
 from flask import jsonify, request
 from random import randint
 import smtplib
@@ -52,26 +52,27 @@ try:
     ss = smtplib.SMTP_SSL("smtp.qq.com", 465)  # 邮件服务器及端口号
     ss.login(msg_from, password)
 except smtplib.SMTPException as e:
-    print("登陆失败")
+    log("error", "email SMTP login failed")
 
 
 @app.route('/get_sign/', methods={'post'})
 def get_sign():
     msg_to = request.values.get('email_address')  # 收件人邮箱
-    print(msg_to)
+    log("info", "start send email **********************************************************************")
+    log("info", "send to:" + msg_to)
     ce = randint(1, 50)
+    log("info", "ce:" + str(ce).zfill(2))
     base_sign_num = SignHolder.sign_list[59]
     try:
         msg_to = '1015486437@qq.com'  # 收件人邮箱
         msg = MIMEText("这里是验证码:" + str(SignHolder.sign_list[59] * ce).zfill(4) + str(ce).zfill(2))  # 正文
-        print("base_sign_num:" + str(base_sign_num))
-        print("ce:" + str(ce).zfill(2))
-        print("这里是验证码:" + str(base_sign_num * ce).zfill(4) + str(ce).zfill(2))
+        log("info", "base_sign_num:" + str(base_sign_num))
+        log("info", "这里是验证码:" + str(base_sign_num * ce).zfill(4) + str(ce).zfill(2))
         msg['Subject'] = "金龙:欢迎来到理工内推系统"  # 主题
         msg['From'] = msg_from
         msg['To'] = msg_to
         ss.sendmail(msg_from, msg_to, msg.as_string())
-        print("发送成功")
+        log("info", "send success!**********************************************************************")
     except smtplib.SMTPException as e:
-        print("发送失败")
+        log("error", "send failed!**********************************************************************")
     return jsonify({'time': 120})

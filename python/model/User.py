@@ -23,7 +23,9 @@ class User(db.Model):
     graduate_year = db.Column(db.SmallInteger)
     name = db.Column(db.String(20), nullable=True)
     topics = db.relationship("Topic", backref='user')
+    resumes = db.relationship("Resume", backref='user')
     email = db.relationship("Email", backref='user', uselist=False)
+    vip = db.relationship("Vip", backref='user', uselist=False)
 
     def __init__(self, username, password, salt='', head_url='', sex='o', graduate_year=int(date.today().year),
                  name=''):
