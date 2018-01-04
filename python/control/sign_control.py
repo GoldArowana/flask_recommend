@@ -64,7 +64,6 @@ def get_sign():
     log("info", "ce:" + str(ce).zfill(2))
     base_sign_num = SignHolder.sign_list[59]
     try:
-        msg_to = '1015486437@qq.com'  # 收件人邮箱
         msg = MIMEText("这里是验证码:" + str(SignHolder.sign_list[59] * ce).zfill(4) + str(ce).zfill(2))  # 正文
         log("info", "base_sign_num:" + str(base_sign_num))
         log("info", "这里是验证码:" + str(base_sign_num * ce).zfill(4) + str(ce).zfill(2))
