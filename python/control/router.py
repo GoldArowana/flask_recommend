@@ -24,6 +24,7 @@ def charts():
 @app.route('/account/', methods={'get', 'post'})
 @login_require
 def account():
+    print('123')
     return render_template('account.html')
 
 

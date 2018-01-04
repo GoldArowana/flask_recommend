@@ -15,14 +15,15 @@ class User(db.Model):
     __tablename__ = 'user'
     __table_args__ = {'mysql_collate': 'utf8_general_ci'}
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(30), unique=True)
-    password = db.Column(db.String(30), nullable=False)
+    username = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100), nullable=False)
     salt = db.Column(db.String(32))
     head_url = db.Column(db.String(256))
     sex = db.Column(db.Enum('o', 'm', 'f'))
     graduate_year = db.Column(db.SmallInteger)
     name = db.Column(db.String(20), nullable=True)
     topics = db.relationship("Topic", backref='user')
+    comments = db.relationship("Comment", backref='user')
     resumes = db.relationship("Resume", backref='user')
     email = db.relationship("Email", backref='user', uselist=False)
     vip = db.relationship("Vip", backref='user', uselist=False)

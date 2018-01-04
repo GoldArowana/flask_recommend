@@ -12,6 +12,7 @@ from flask_sqlalchemy import BaseQuery
 from web import app, db, log, login_require
 from python.model.Topic import Topic  # type:Topic
 from python.model.User import User  # type:User
+from python.model.Comment import Comment  # type:Comment
 from sqlalchemy.sql import func
 
 
@@ -39,11 +40,14 @@ def topic_publish():
 
 
 @app.route('/topic/detail/<int:topic_id>/', methods={'get', 'post'})
-@login_require
 def detail(topic_id):
     topic = Topic.query.filter_by(id=topic_id).first()
-    ret_dic = {'company': topic.company.name, 'author': topic.user.username, 'time': topic.on_datetime,
-               'context': topic.context, 'title': topic.title, 'tag': topic.tag}
+    c_list = []
+    for i in topic.comments:  # type:Comment
+        c_list.append({'username': i.user.username, 'context': i.context, 'time': i.on_date})
+    ret_dic = {'topic_id': topic.id, 'company': topic.company.name, 'author': topic.user.username,
+               'time': topic.on_datetime,
+               'context': topic.context, 'title': topic.title, 'tag': topic.tag, 'comments': c_list}
     return render_template('detail.html', ret_dic=ret_dic)
 
 
@@ -82,3 +86,21 @@ def get_last_10_news():
             {'id': i.id, 'title': i.title, 'company': i.company.name, 'time': i.on_datetime, 'user': i.user.username})
     log('info', '<10 last news>' + str(ret_list))
     return jsonify(ret_list)
+
+
+@app.route('/reply_topic/', methods={'get', 'post'})
+@login_require
+def reply_topic():
+    username = session['username']
+    this_user = User.query.filter_by(username=username).first()
+    topic_id = request.values.get('topic_id')
+    context = request.values.get('context')
+
+    # print(username)
+    # print(this_user)
+    # print(topic_id)
+    # print(context)
+    # print(Comment(int(topic_id), this_user.id, context='我是,我想投简历'))
+    db.session.add(Comment(int(topic_id), this_user.id, context=context))
+    db.session.commit()
+    return redirect('/topic/detail/' + str(topic_id) + '/')

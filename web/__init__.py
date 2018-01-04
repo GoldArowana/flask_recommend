@@ -34,12 +34,12 @@ def login_require(func):
     @functools.wraps(func)
     def wrapper():
         if session.get('username') is not None:
-            func()
+            print('not null')
+            return func()
         else:
             return redirect('/login/')
 
     return wrapper
-
 
 db = SQLAlchemy(app)
 

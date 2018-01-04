@@ -60,3 +60,8 @@ bug:::首页的最新10条数据，按时间排序的逻辑错乱，已改正。
 添加logging模块.记录系统日志。
 
 写了一个装饰器，在路由后验证登陆，未登录则跳转login页面。
+
+bug:::不需要登陆的页面可以正常跳转。需要登陆的页面在登陆后，无法正常跳转，并且报错：ValueError: View function did not return a response
+解决： stack上的答案：you only returns a template under some circumstances。
+
+增加md5加密。密码加盐处理。

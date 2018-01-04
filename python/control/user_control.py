@@ -11,14 +11,22 @@ from flask import request, redirect, flash, session, jsonify
 from python.model import *
 from sqlalchemy.sql import func
 from python.control import sign_control
+import random, hashlib
 
 
 @app.route('/login_check/', methods={'get', 'post'})
 def login_check():
     username = request.values.get('username')
     password = request.values.get('password')
-    user = User.User.query.filter_by(username=username, password=password).first()
-    if user is None:
+    user = User.User.query.filter_by(username=username).first()
+    if user.salt != '':
+        m = hashlib.md5()
+        m.update((password + user.salt).encode("utf8"))
+        password_in_db = m.hexdigest()
+    else:
+        password_in_db = user.password
+
+    if password_in_db != user.password:
         flash('登陆失败')
         log("warn", username + "login failed")
         return redirect('/login/')
@@ -60,7 +68,13 @@ def add_user():
         log("info", "sign_list:" + str(sign_control.SignHolder.sign_list))
         log("info", "register failed**********************************************************************")
         return redirect('/register/')
-    db.session.add(User.User(username, password, sex=sex, graduate_year=int(graduate_year), name=netname))
+    salt = '.'.join(random.sample('01234567890abcdefghigABCDEFGHI', 5))
+    log("info", "salt:" + salt)
+    m = hashlib.md5()
+    m.update((password + salt).encode("utf8"))
+    password = m.hexdigest()
+    log("info", "password after md5:" + password)
+    db.session.add(User.User(username, password, salt=salt, sex=sex, graduate_year=int(graduate_year), name=netname))
     log("info", "user inserted")
     this_user = User.User.query.filter_by(username=username).first()  # type:User
     log("info", "user orm str:" + str(this_user))

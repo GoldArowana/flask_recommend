@@ -29,5 +29,4 @@ class Comment(db.Model):
         self.context = context
 
     def __repr__(self):
-        return "<Comment id:%d, topic_id:%d, resume_id:%d, on_date:%s>" % (
-            self.id, self.topic_id, self.resume_id, self.on_date)
+        return "<Comment user_id:%d, topic_id:%d, context:%s>" % (self.user_id, self.topic_id, self.context)

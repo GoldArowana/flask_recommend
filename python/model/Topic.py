@@ -21,6 +21,7 @@ class Topic(db.Model):
     context = db.Column(db.TEXT)
     title = db.Column(db.VARCHAR(100))
     tag = db.Column(db.VARCHAR(255))
+    comments = db.relationship("Comment", backref='topic')
 
     def __init__(self, company_id, user_id, on_datetime=datetime.now(), title='', tag='', context=''):
         self.company_id = company_id
